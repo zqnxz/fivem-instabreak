@@ -1,15 +1,10 @@
-Citizen.CreateThread(function()
-  while true do
-    Wait(1)
-    if IsControlJustPressed(1, 38) then
-      print('pressed') 
-      local ped = PlayerPedId()
-      local veh = GetVehiclePedIsIn(ped, false)
-      local vehCoords = GetEntityCoords(veh)
-      local newCoords = vector3(vehCoords.x, vehCoords.y, vehCoords.z + 2.0)
+RegisterCommand('brake', function()
+  local ped = PlayerPedId()
+  local veh = GetVehiclePedIsIn(ped, false)
 
-      SetEntityCoords(veh, newCoords.x, newCoords.y, newCoords.z, false, false, false, true)
-    end    
+  if GetPedInVehicleSeat(veh, -1) == ped then
+    SetEntityVelocity(veh, 0.0, 0.0, 0.0)
   end
-end)
- 
+end, false)
+
+RegisterKeyMapping('brake', 'Brake', 'keyboard', 'E')
